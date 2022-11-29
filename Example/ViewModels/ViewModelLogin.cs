@@ -19,7 +19,8 @@ namespace Example.ViewModels
         /// Small explaining of what to do.
         /// </summary>
         public string Tutorial => 
-            "Try one to login as one of the users to see how the interface change based on roles.\n" +
+            "Try to login as one of the users below.\n" +
+            "You can see how the interface changes based on the different roles.\n" +
             "\n" +
             "USER\t\tPASSWORD\t\tROLE\n" +
             "--------------------------------------------------------------\n" +
@@ -27,7 +28,7 @@ namespace Example.ViewModels
             "Pam51\t\tpampam!23\t\tUSER\n" +
             "Carl101\t\tsancarl%12\t\tUSER\n" +
             "JohnDear56\tjohnthabest\t\tGUEST\n";
-
+     
         /// <summary>
         /// UserName.
         /// </summary>

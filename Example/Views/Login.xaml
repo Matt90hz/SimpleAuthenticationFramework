@@ -21,7 +21,7 @@
                        Foreground="White"/>
             
             <!--login inputs-->
-            <StackPanel MaxWidth="300" Margin="30">
+            <StackPanel Margin="30">
                 <TextBlock Text="User Name" Foreground="White"/>
                 <TextBox Text="{Binding UserName}"/>
                 <Border Margin="10"/>
@@ -33,7 +33,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="Login" Command="{Binding LoginCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" Margin="5" Height="30" Width="70"/>
                 <!--tutorial-->
-                <TextBlock Text="?" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="10 0">
+                <TextBlock Text="?" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="10 0" ToolTipService.ShowDuration="60000">
                     <TextBlock.ToolTip>
                         <TextBlock Text="{Binding Tutorial}"/>
                     </TextBlock.ToolTip>
