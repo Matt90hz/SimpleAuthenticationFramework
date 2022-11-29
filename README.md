@@ -1,23 +1,23 @@
 # Simple Authentication Framework
 
-## Why do I create this?
+## Why did I create this?
 
-I was working to a project in WPF and I wanted a simple way to manage authorization and authentication in my project.
+I was working on a WPF project and I wanted a simple way to manage authorization and authentication.
 
 ## What does it do?
 
-It manages the basics of user management:
+It provides the basics of user management:
 - Register/Unregister a user;
 - Login/Logout management;
-- Authentication of a user;
+- User authentication;
 - Authorization based on roles;
-- Validation of key inputs like user name and password.
+- Validation of key inputs like username and password.
 
 ## How to get started?
 
-Simply implement `IUser` and `IRole` and then use `UserMangerBuilder` to get an instance of `IUserManager`.
+Simply implement `IUser` and `IRole` and then use `UserManagerBuilder` to get an instance of `IUserManager`.
 
-The framework come with extension methods to deal with Dependency Injection and Entity Framework Core.
+The framework comes with extension methods to deal with Dependency Injection and Entity Framework Core.
 
 ## Example
 
