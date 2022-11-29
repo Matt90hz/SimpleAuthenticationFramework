@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<Nullable>enable</Nullable>
+	<PackageId>IncaTechnologies.SimpleAuthentication</PackageId>
+	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<Title>Simple Authentication Framework</Title>
+	<Version>1.0.0</Version>
+	<Authors>IncaTechnologies</Authors>
+	<Product>Simple Authentication Framework</Product>
+	<Description>Simple role based authentication framework.</Description>
+	<Copyright>Copyright (c) IncaTechnologies 2022</Copyright>
+	<PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
+	<PackageReleaseNotes>1.0.0 - First release</PackageReleaseNotes>
+	<NeutralLanguage>en</NeutralLanguage>
+	<PackageTags>user management, authentication, authorization, role, roles, users, users, login, auth</PackageTags>
+	<PackageLicenseExpression>Unlicense</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\IncaTechnologies\IncaTechnologies_logo_128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+  </ItemGroup>
+
+</Project>
