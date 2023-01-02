@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Interface Name="Authentication.Interfaces.IAuthenticator" Collapsed="true">
+    <Position X="2.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAutenticator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Authentication.Interfaces.ILogger&lt;TUser&gt;" Collapsed="true">
+    <Position X="6.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Authentication.Interfaces.IAuthorizer" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAuthorizer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Authentication.Interfaces.IRegistrator&lt;TUser&gt;" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Interfaces\IRegistrator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Authentication.Interfaces.ISubscriber&lt;TRole&gt;" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAgACQAAACAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ISubscriber.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Authentication.Interfaces.ILogger" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Interfaces\ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Authentication.Interfaces.IUserManager&lt;TUser, TRole&gt;" Collapsed="true">
+    <Position X="4" Y="2.75" Width="2.25" />
+    <AssociationLine Name="Registrator" Type="Authentication.Interfaces.IRegistrator&lt;TUser&gt;" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="3.125" />
+        <Point X="1.375" Y="3.125" />
+        <Point X="1.375" Y="2.062" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Authenticator" Type="Authentication.Interfaces.IAuthenticator" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="3" />
+        <Point X="3.219" Y="3" />
+        <Point X="3.219" Y="2.062" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Logger" Type="Authentication.Interfaces.ILogger&lt;TUser&gt;" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="3" />
+        <Point X="7" Y="3" />
+        <Point X="7" Y="2.191" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Authorizer" Type="Authentication.Interfaces.IAuthorizer" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="3.125" />
+        <Point X="8.75" Y="3.125" />
+        <Point X="8.75" Y="2.062" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAIAEAACAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IUserManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Authenticator" />
+      <Property Name="Authorizer" />
+      <Property Name="Logger" />
+      <Property Name="Registrator" />
+      <Property Name="Subscriber" />
+    </ShowAsAssociation>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
