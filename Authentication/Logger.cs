@@ -10,6 +10,7 @@ namespace Authentication
     /// Implementation of <see cref="ILogger{TUser}"/>.
     /// </summary>
     /// <typeparam name="TUser"></typeparam>
+    /// <typeparam name="TRole"></typeparam>
     public class Logger<TUser, TRole> : ILogger<TUser>
         where TUser : class, IUser
         where TRole : class, IRole
@@ -21,6 +22,7 @@ namespace Authentication
         /// Creates a new instance of <see cref="Logger{TUser, TRole}"/> and initialize the fields.
         /// </summary>
         /// <param name="authenticator"></param>
+        /// <param name="store"></param>
         public Logger(IStore<TUser, TRole> store, IAuthenticator authenticator)
         {
             _store = store;
