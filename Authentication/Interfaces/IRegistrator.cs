@@ -16,11 +16,12 @@ namespace Authentication.Interfaces
         /// Register <paramref name="user"/> with the given <paramref name="password"/>.
         /// </summary>
         /// <remarks>
-        /// Throws an <see cref="InvalidUserNameOrPasswordException"/> if <paramref name="user"/> or <paramref name="password"/> are invalid due to <see cref="IValidator"/> policies.
+        /// Throws an <see cref="InvalidUserException"/> or <see cref="InvalidRoleException"/> if <paramref name="user"/> or <paramref name="password"/> are invalid due to <see cref="IValidator"/> policies.
         /// </remarks>
         /// <param name="user"></param>
         /// <param name="password"></param>
-        /// <exception cref="InvalidUserNameOrPasswordException"/>
+        /// <exception cref="InvalidUserException"/>
+        /// <exception cref="InvalidRoleException"/>
         void Register(TUser user, string password);
 
         /// <inheritdoc cref="Register(TUser, string)"/>
