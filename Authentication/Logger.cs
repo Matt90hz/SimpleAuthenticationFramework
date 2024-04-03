@@ -3,6 +3,7 @@ using Authentication.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Authentication
 {
@@ -16,6 +17,9 @@ namespace Authentication
         where TRole : class, IRole
     {
         private readonly IStore<TUser, TRole> _store;
+        /// <summary>
+        /// Authonticator to retrive the user on valid login
+        /// </summary>
         protected readonly IAuthenticator _authenticator;
 
         /// <summary>
@@ -48,5 +52,14 @@ namespace Authentication
             CurrentUser = null;
         }
 
+        /// <inheritdoc/>
+        public async Task<bool> LoginAsync(string userName, string password)
+        {
+            if (await _authenticator.AuthenticateAsync(userName, password) is false) return false;
+
+            CurrentUser = await _store.FindUserAsync(userName);
+
+            return true;
+        }
     }
 }

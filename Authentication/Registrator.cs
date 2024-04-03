@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication.Exceptions;
 
 namespace Authentication
 {
@@ -74,5 +75,46 @@ namespace Authentication
 
         }
 
+        /// <inheritdoc/>
+        public async Task RegisterAsync(TUser user, string password)
+        {
+            if (_validator.IsValidUserName(user.UserName) is false) throw new InvalidUserException($"Invalid user name: {user.UserName}.");
+
+            if (_validator.IsValidPassword(password) is false) throw new InvalidPasswordException("Invalid password!");
+
+            user.Salt = _hasher.GenerateSalt();
+
+            user.HashedPassword = _hasher.Hash(password, user.Salt);
+
+            await _store.UpdateAsync(user);
+        }
+
+        /// <inheritdoc/>
+        public async Task ChangePasswordAsync(string userName, string newPassword)
+        {
+            if (_store.FindUser(userName) is not TUser user) throw new InvalidUserException($"Invalid user name: {userName}.");
+
+            if (_validator.IsValidPassword(newPassword) is false) throw new InvalidPasswordException("Invalid password!");
+
+            user.Salt = _hasher.GenerateSalt();
+
+            user.HashedPassword = _hasher.Hash(newPassword, user.Salt);
+
+            await _store.UpdateAsync(user);
+        }
+
+        /// <inheritdoc/>
+        public async Task UnregisterAsync(string userName)
+        {
+            if (_store.FindUser(userName) is null) throw new InvalidUserException($"Invalid user name: {userName}.");
+
+            await _store.DeleteUserAsync(userName);
+        }
+
+        /// <inheritdoc/>
+        public Task<IEnumerable<TUser>> GetUsersAsync()
+        {
+            return _store.GetUsersAsync();
+        }
     }
 }
