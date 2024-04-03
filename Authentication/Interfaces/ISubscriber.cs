@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication.Exceptions;
 using Authentication.Models;
 
 namespace Authentication.Interfaces
@@ -23,6 +24,13 @@ namespace Authentication.Interfaces
         /// All the <typeparamref name="TRole"/> stored.
         /// </summary>
         IEnumerable<TRole> Roles { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>All the <typeparamref name="TRole"/> stored.</returns>
+        Task<IEnumerable<TRole>> GetRolesAsync();
+
         /// <summary>
         /// Remove a <see cref="IUser"/> form a certain role.
         /// </summary>
@@ -34,6 +42,10 @@ namespace Authentication.Interfaces
         /// <exception cref="InvalidUserException"/>
         /// <exception cref="InvalidRoleException"/>
         void Unsubcribe(string roleKey, string userName);
+
+        /// <inheritdoc cref="Unsubcribe(string, string)"/>
+        Task UnsubcribeAsync(string roleKey, string userName);
+
         /// <summary>
         /// Subscribe a <see cref="IUser"/> to a certain role.
         /// </summary>
@@ -46,12 +58,18 @@ namespace Authentication.Interfaces
         /// <exception cref="InvalidRoleException"/>
         void Subscribe(string roleKey, string userName);
 
+        /// <inheritdoc cref="Subscribe(string, string)"/>
+        Task SubscribeAsync(string roleKey, string userName);
+
         /// <summary>
         /// Get a collection of all roles that a user is subscribed to.
         /// </summary>
         /// <param name="userName"></param>
         /// <returns>All <typeparamref name="TRole"/> of a user. An empty collection if <paramref name="userName"/> is not a valid <see cref="IUser.UserName"/>.</returns>
         IEnumerable<TRole> GetUserRoles(string userName);
+
+        /// <inheritdoc cref="GetUserRoles(string)"/>
+        Task<IEnumerable<TRole>> GetUserRolesAsync(string userName);
 
         /// <summary>
         /// Check if a user is subscribed to any of the roles in <paramref name="roleKeys"/>.
@@ -60,5 +78,8 @@ namespace Authentication.Interfaces
         /// <param name="roleKeys"></param>
         /// <returns><c>true</c> if is subcribed, otherwise <c>false</c> (even if the role or the user does not exsists).</returns>
         bool IsSubscribed(string userName, params string[] roleKeys);
+
+        /// <inheritdoc cref="IsSubscribed(string, string[])"/>
+        Task<bool> IsSubscribedAsync(string userName, params string[] roleKeys);
     }
 }
