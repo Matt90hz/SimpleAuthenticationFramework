@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 	<Nullable>enable</Nullable>
 	<PackageId>IncaTechnologies.SimpleAuthentication</PackageId>
 	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -39,8 +39,12 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
   </ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.28" />
+	</ItemGroup>
 
 </Project>
