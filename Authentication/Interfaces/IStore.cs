@@ -42,7 +42,7 @@ namespace Authentication.Interfaces
         TUser? FindUser(string userName);
 
         /// <inheritdoc cref="FindUser(string)"/>
-        Task<TUser?> FindUserAsync();
+        Task<TUser?> FindUserAsync(string userName);
 
         /// <summary>
         /// Get a collection of all <typeparamref name="TUser"/> stored.
