@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Authentication.Exceptions;
 
 namespace Authentication.Stores.DbContextStore
 {
@@ -143,7 +145,122 @@ namespace Authentication.Stores.DbContextStore
         public bool IsSubscribed(string userName,params string[] roleKeys)
         {
             using var context = _dbContextFactory.CreateDbContext();
-            return context.Subscriptions.AsNoTracking().Where(s => s.UserName == userName).Select(s => s.RoleKey).ToArray().Intersect(roleKeys).Any();
+
+            return context.Subscriptions
+                .AsNoTracking()
+                .Where(s => s.UserName == userName)               
+                .ToArray()
+                .Any(subscription => roleKeys.Contains(subscription.RoleKey));
+        }
+
+        /// <inheritdoc/>
+        public async Task UpdateAsync(TUser user)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            context.Users.Update(user);
+
+            await context.SaveChangesAsync();
+        }
+        
+        /// <inheritdoc/>
+        public async Task DeleteUserAsync(string userName)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            var user = await context.FindAsync<TUser>(userName) ?? throw new InvalidUserException($"User {userName} not found!");
+
+            context.Remove(user);
+
+            await context.SaveChangesAsync();
+        }
+        
+        /// <inheritdoc/>
+        public async Task<TUser?> FindUserAsync(string userName)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            return await context.FindAsync<TUser>(userName);
+        }
+        
+        /// <inheritdoc/>
+        public async Task<IEnumerable<TUser>> GetUsersAsync()
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            return await context.Users.AsNoTracking().ToArrayAsync();
+        }
+        
+        /// <inheritdoc/>
+        public async Task UpdateAsync(TRole role)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            context.Update(role);
+
+            await context.SaveChangesAsync();
+        }
+        
+        /// <inheritdoc/>
+        public async Task DeleteRoleAsync(string roleKey)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            var role = await context.FindAsync<TRole>(roleKey) ?? throw new InvalidRoleException($"Role {roleKey} not found!");
+        }
+        
+        /// <inheritdoc/>
+        public async Task<TRole?> FindRoleAsync(string roleKey)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            return await context.FindAsync<TRole>(roleKey);
+        }
+        
+        /// <inheritdoc/>
+        public async Task<IEnumerable<TRole>> GetRolesAsync()
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            return await context.Roles.AsNoTracking().ToArrayAsync();
+        }
+        
+        /// <inheritdoc/>
+        public async Task JoinAsync(string userName, string roleKey)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            var user = await context.FindAsync<TUser>(userName) ?? throw new InvalidUserException($"User {userName} not found!");
+            var role =  await context.FindAsync<TRole>(roleKey) ?? throw new InvalidRoleException($"Role {roleKey} not found!");
+
+            if (context.Subscriptions.Any(s => s.UserName == userName && s.RoleKey == roleKey)) return;
+
+            context.Subscriptions.Add(new(userName, roleKey));
+
+            await context.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task DetachAsync(string userName, string roleKey)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            if (context.Subscriptions.FirstOrDefault(s => s.UserName == userName && s.RoleKey == roleKey) is not Subscription subscription) return;
+
+            context.Remove(subscription);
+
+            await context.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> IsSubscribedAsync(string userName, params string[] roleKeys)
+        {
+            using var context = _dbContextFactory.CreateDbContext();
+
+            var subscriptions = await context.Subscriptions.AsNoTracking().Where(s => s.UserName == userName).ToArrayAsync();
+
+            return subscriptions.Any(subscription => roleKeys.Contains(subscription.RoleKey));
+
         }
     }
 
