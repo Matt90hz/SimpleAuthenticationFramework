@@ -117,5 +117,93 @@ namespace Authentication.Stores
 
             _roles.Add(role);
         }
+
+        /// <inheritdoc/>
+        public Task UpdateAsync(TUser user)
+        {
+            Update(user);
+
+            return Task.CompletedTask;
+        }
+
+        /// <inheritdoc/>
+        public Task DeleteUserAsync(string userName)
+        {
+            DeleteUser(userName);
+
+            return Task.CompletedTask;
+        }
+
+        /// <inheritdoc/>
+        public Task<TUser?> FindUserAsync(string userName)
+        {
+            var user = FindUser(userName);
+
+            return Task.FromResult(user);
+        }
+
+        /// <inheritdoc/>
+        public Task<IEnumerable<TUser>> GetUsersAsync()
+        {
+            var users = GetAllUsers();
+
+            return Task.FromResult(users);
+        }
+        
+        /// <inheritdoc/>
+        public Task UpdateAsync(TRole role)
+        {
+            Update(role);
+
+            return Task.CompletedTask;
+        }
+        
+        /// <inheritdoc/>
+        public Task DeleteRoleAsync(string roleKey)
+        {
+            DeleteRole(roleKey);
+
+            return Task.CompletedTask;
+        }
+        
+        /// <inheritdoc/>
+        public Task<TRole?> FindRoleAsync(string roleKey)
+        {
+            var role = FindRole(roleKey);
+
+            return Task.FromResult(role);
+        }
+        
+        /// <inheritdoc/>
+        public Task<IEnumerable<TRole>> GetRolesAsync()
+        {
+            var roles = GetAllRoles();
+
+            return Task.FromResult(roles);
+        }
+        
+        /// <inheritdoc/>
+        public Task JoinAsync(string userName, string roleKey)
+        {
+            Join(userName, roleKey);
+
+            return Task.CompletedTask;
+        }
+        
+        /// <inheritdoc/>
+        public Task DetachAsync(string userName, string roleKey)
+        {
+            Detach(userName, roleKey);
+
+            return Task.CompletedTask;
+        }
+        
+        /// <inheritdoc/>
+        public Task<bool> IsSubscribedAsync(string userName, params string[] roleKeys)
+        {
+            var isSubscribed = IsSubscribed(userName, roleKeys);
+
+            return Task.FromResult(isSubscribed);
+        }
     }
 }
