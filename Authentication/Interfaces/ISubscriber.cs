@@ -27,21 +27,23 @@ namespace Authentication.Interfaces
         /// Remove a <see cref="IUser"/> form a certain role.
         /// </summary>
         /// <remarks>
-        /// Throws an <see cref="Exception"/> if <paramref name="roleKey"/> or <paramref name="userName"/> are not found in the store.
+        /// Throws an <see cref="InvalidRoleException"/> if <paramref name="roleKey"/> is not stored or an <see cref="InvalidUserException"/> if <paramref name="userName"/> is not stored.
         /// </remarks>
         /// <param name="roleKey"></param>
         /// <param name="userName"></param>
-        /// <exception cref="Exception"/>
+        /// <exception cref="InvalidUserException"/>
+        /// <exception cref="InvalidRoleException"/>
         void Unsubcribe(string roleKey, string userName);
         /// <summary>
         /// Subscribe a <see cref="IUser"/> to a certain role.
         /// </summary>
         /// <remarks>
-        /// Throws an <see cref="Exception"/> if <paramref name="roleKey"/> or <paramref name="userName"/> are not found in the store.
+        /// Throws an <see cref="InvalidRoleException"/> if <paramref name="roleKey"/> is not stored or an <see cref="InvalidUserException"/> if <paramref name="userName"/> is not stored.
         /// </remarks>
         /// <param name="roleKey"></param>
         /// <param name="userName"></param>
-        /// <exception cref="Exception"/>
+        /// <exception cref="InvalidUserException"/>
+        /// <exception cref="InvalidRoleException"/>
         void Subscribe(string roleKey, string userName);
 
         /// <summary>
