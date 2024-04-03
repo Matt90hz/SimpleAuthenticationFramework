@@ -34,7 +34,8 @@ namespace Authentication.Interfaces
         where TUser : IUser
     {
         /// <summary>
-        /// Stores the <typeparamref name="TUser"/> currently logged.
+        /// Stores the <typeparamref name="TUser"/> currently logged.<br/> 
+        /// <c>null</c> if no one is logged.
         /// </summary>
         TUser? CurrentUser { get; }
     }
