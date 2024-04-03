@@ -16,6 +16,7 @@ namespace Authentication.Interfaces
         /// Set <see cref="ILogger{TUser}.CurrentUser"/> to null.
         /// </summary>
         void Logout();
+
         /// <summary>
         /// Set <see cref="ILogger{TUser}.CurrentUser"/> if <paramref name="userName"/> and <paramref name="password"/> are valid credentials.
         /// </summary>
@@ -23,6 +24,9 @@ namespace Authentication.Interfaces
         /// <param name="password"></param>
         /// <returns><c>true</c> loging successful, otherwise <c>false</c></returns>
         bool Login(string userName, string password);
+
+        /// <inheritdoc cref="Login(string, string)"/>
+        Task<bool> LoginAsync(string userName, string password);
 
     }
 

@@ -22,5 +22,8 @@ namespace Authentication.Interfaces
         /// <c>True</c> if the credential are valid. <c>False</c> if authentication fails.
         /// </returns>
         bool Authenticate(string userName, string password);
+
+        /// <inheritdoc cref="Authenticate(string, string)"/>
+        Task<bool> AuthenticateAsync(string userName, string password);
     }
 }
