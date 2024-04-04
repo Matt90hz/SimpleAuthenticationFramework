@@ -21,7 +21,17 @@ namespace Example.Repository
             throw new NotImplementedException();
         }
 
+        public Task DeleteRoleAsync(string roleKey)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteUser(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteUserAsync(string userName)
         {
             throw new NotImplementedException();
         }
@@ -31,12 +41,27 @@ namespace Example.Repository
             throw new NotImplementedException();
         }
 
+        public Task DetachAsync(string userName, string roleKey)
+        {
+            throw new NotImplementedException();
+        }
+
         public Role? FindRole(string roleKey)
         {
             throw new NotImplementedException();
         }
 
+        public Task<Role?> FindRoleAsync(string roleKey)
+        {
+            throw new NotImplementedException();
+        }
+
         public User? FindUser(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User?> FindUserAsync(string userName)
         {
             throw new NotImplementedException();
         }
@@ -51,12 +76,32 @@ namespace Example.Repository
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<Role>> GetRolesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<User>> GetUsersAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsSubscribed(string userName, params string[] roleKeys)
         {
             throw new NotImplementedException();
         }
 
+        public Task<bool> IsSubscribedAsync(string userName, params string[] roleKeys)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Join(string userName, string roleKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task JoinAsync(string userName, string roleKey)
         {
             throw new NotImplementedException();
         }
@@ -67,6 +112,16 @@ namespace Example.Repository
         }
 
         public void Update(Role role)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Role role)
         {
             throw new NotImplementedException();
         }
