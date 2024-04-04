@@ -41,9 +41,9 @@ namespace Authentication
         /// <inheritdoc/>
         public virtual void ChangePassword(string userName, string newPassword)
         {
-            if (_store.FindUser(userName) is not TUser user) throw new Exception("User not found.");
+            if (_store.FindUser(userName) is not TUser user) throw new InvalidUserException($"Invalid user name: {userName}.");
 
-            if (!_validator.IsValidPassword(newPassword)) throw new Exception("Invalid password");
+            if (!_validator.IsValidPassword(newPassword)) throw new InvalidPasswordException("Invalid password!");
             
             user.Salt = _hasher.GenerateSalt();
             user.HashedPassword = _hasher.Hash(newPassword, user.Salt);
@@ -54,9 +54,9 @@ namespace Authentication
         /// <inheritdoc/>
         public virtual void Register(TUser user, string password)
         {
-            if (!_validator.IsValidUserName(user.UserName)) throw new Exception("Invalid user name.");
+            if (!_validator.IsValidUserName(user.UserName)) throw new InvalidUserException($"Invalid user name: {user.UserName}.");
 
-            if (!_validator.IsValidPassword(password)) throw new Exception("Invalid password");
+            if (!_validator.IsValidPassword(password))throw new InvalidPasswordException("Invalid password!");
 
             user.Salt = _hasher.GenerateSalt();
 
@@ -69,7 +69,7 @@ namespace Authentication
         /// <inheritdoc/>
         public virtual void Unregister(string userName)
         {
-            if (_store.FindUser(userName) is null) throw new Exception("User not found.");
+            if (_store.FindUser(userName) is null) throw new InvalidUserException($"Invalid user name: {userName}.");
 
             _store.DeleteUser(userName);
 

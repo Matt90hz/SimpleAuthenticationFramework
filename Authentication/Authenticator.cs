@@ -40,7 +40,7 @@ namespace Authentication
         /// <inheritdoc/>
         public async Task<bool> AuthenticateAsync(string userName, string password)
         {    
-            return await _store.FindRoleAsync(userName) is IUser user && _hasher.Check(user.HashedPassword, password, user.Salt);
+            return await _store.FindUserAsync(userName) is IUser user && _hasher.Check(user.HashedPassword, password, user.Salt);
         }
     }
 }

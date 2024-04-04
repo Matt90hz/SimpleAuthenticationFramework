@@ -118,7 +118,7 @@ namespace Authentication
 
             if (_store.FindUser(userName) is null) throw new InvalidUserException($"User {userName} not found.");
 
-            if (_store.IsSubscribed(userName, roleKey) is false) return Task.CompletedTask;
+            if (_store.IsSubscribed(userName, roleKey) is false) return;
 
             await _store.DetachAsync(userName, roleKey);
         }
