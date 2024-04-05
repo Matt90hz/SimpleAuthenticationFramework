@@ -35,7 +35,7 @@ namespace Authentication
 
         /// <inheritdoc/>
         public virtual IEnumerable<TRole> Roles => _store.GetAllRoles();
-
+        
         /// <inheritdoc/>
         public Task<IEnumerable<TRole>> GetRolesAsync()
         {
@@ -100,7 +100,7 @@ namespace Authentication
         }
 
         /// <inheritdoc/>
-        public virtual void Unsubcribe(string roleKey, string userName)
+        public virtual void Unsubscribe(string roleKey, string userName)
         {
             if (_store.FindRole(roleKey) is null) throw new InvalidRoleException($"Role {roleKey} not found.");
 
@@ -112,7 +112,7 @@ namespace Authentication
         }
 
         /// <inheritdoc/>
-        public async Task UnsubcribeAsync(string roleKey, string userName)
+        public async Task UnsubscribeAsync(string roleKey, string userName)
         {
             if (_store.FindRole(roleKey) is null) throw new InvalidRoleException($"Role {roleKey} not found.");
 

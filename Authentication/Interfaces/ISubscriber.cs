@@ -41,10 +41,10 @@ namespace Authentication.Interfaces
         /// <param name="userName"></param>
         /// <exception cref="InvalidUserException"/>
         /// <exception cref="InvalidRoleException"/>
-        void Unsubcribe(string roleKey, string userName);
+        void Unsubscribe(string roleKey, string userName);
 
-        /// <inheritdoc cref="Unsubcribe(string, string)"/>
-        Task UnsubcribeAsync(string roleKey, string userName);
+        /// <inheritdoc cref="Unsubscribe(string, string)"/>
+        Task UnsubscribeAsync(string roleKey, string userName);
 
         /// <summary>
         /// Subscribe a <see cref="IUser"/> to a certain role.
