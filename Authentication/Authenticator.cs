@@ -1,9 +1,5 @@
-﻿using Authentication.Models;
-using Authentication.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Authentication.Interfaces;
+using Authentication.Models;
 using System.Threading.Tasks;
 
 namespace Authentication
@@ -39,7 +35,7 @@ namespace Authentication
 
         /// <inheritdoc/>
         public async Task<bool> AuthenticateAsync(string userName, string password)
-        {    
+        {
             return await _store.FindUserAsync(userName) is IUser user && _hasher.Check(user.HashedPassword, password, user.Salt);
         }
     }

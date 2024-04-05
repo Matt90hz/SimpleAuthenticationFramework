@@ -1,6 +1,5 @@
 ﻿using Authentication.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Authentication.Stores.DbContextStore
 {

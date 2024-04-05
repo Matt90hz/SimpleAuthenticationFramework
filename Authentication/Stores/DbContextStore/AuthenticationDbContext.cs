@@ -1,7 +1,6 @@
 ﻿using Authentication.Extensions;
 using Authentication.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Authentication.Stores.DbContextStore
 {
@@ -42,8 +41,4 @@ namespace Authentication.Stores.DbContextStore
         /// <inheritdoc/>
         public virtual DbSet<Subscription> Subscriptions => Set<Subscription>();
     }
-
-
-
-
 }

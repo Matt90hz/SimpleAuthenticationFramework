@@ -1,8 +1,5 @@
 ﻿using Authentication.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Authentication.Interfaces
@@ -121,7 +118,4 @@ namespace Authentication.Interfaces
         /// <inheritdoc cref="IsSubscribed(string, string[])"/>
         Task<bool> IsSubscribedAsync(string userName, params string[] roleKeys);
     }
-
-
-
 }

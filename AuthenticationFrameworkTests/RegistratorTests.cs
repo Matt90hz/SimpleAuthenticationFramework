@@ -9,8 +9,8 @@ namespace AuthenticationFrameworkTests;
 
 public sealed class RegistratorTests
 {
-    readonly TestingDbContextFactory _dbContextFactory;
-    readonly IUserManager<User, Role> _userManager;
+    private readonly TestingDbContextFactory _dbContextFactory;
+    private readonly IUserManager<User, Role> _userManager;
 
     public RegistratorTests()
     {
@@ -23,7 +23,7 @@ public sealed class RegistratorTests
         _userManager = new UserManagerBuilder<User, Role>()
             .UseDbContextStore(_dbContextFactory)
             .CreateUserManager();
-    }   
+    }
 
     [Fact]
     public void ChangePassword_User_CanLoginWithNewPassword()
@@ -83,7 +83,7 @@ public sealed class RegistratorTests
     public void Register_NewUser_CanLogin()
     {
         //arrange
-        User newUser = new() 
+        User newUser = new()
         {
             UserName = "newUser",
         };
@@ -158,8 +158,8 @@ public sealed class RegistratorTests
     public void Unregister_User_RemovesItFromDatabase()
     {
         //arrange
-        var context = _dbContextFactory.CreateDbContext();
-        var userName = "Pam51";
+        TestingDbContext context = _dbContextFactory.CreateDbContext();
+        string userName = "Pam51";
 
         //act
         bool pamExsists = context.Users.Any(user => user.UserName == userName);
@@ -178,7 +178,7 @@ public sealed class RegistratorTests
     public void Unregister_InvalidUser_ThorwInvalidUserException()
     {
         //arrange
-        var userName = "wrong";
+        string userName = "wrong";
 
         //act
         Action act = () => _userManager.Registrator.Unregister(userName);
@@ -191,7 +191,7 @@ public sealed class RegistratorTests
     public void Users_ShouldContainAllTheUsers()
     {
         //act
-        var users = _userManager.Registrator.Users;
+        IEnumerable<User> users = _userManager.Registrator.Users;
 
         //assert
         users
@@ -334,8 +334,8 @@ public sealed class RegistratorTests
     public async Task UnregisterAsync_User_RemovesItFromDatabase()
     {
         //arrange
-        var context = _dbContextFactory.CreateDbContext();
-        var userName = "Pam51";
+        TestingDbContext context = _dbContextFactory.CreateDbContext();
+        string userName = "Pam51";
 
         //act
         bool pamExsists = context.Users.Any(user => user.UserName == userName);
@@ -354,7 +354,7 @@ public sealed class RegistratorTests
     public async Task UnregisterAsync_InvalidUser_ThorwInvalidUserException()
     {
         //arrange
-        var userName = "wrong";
+        string userName = "wrong";
 
         //act
         Func<Task> act = async () => await _userManager.Registrator.UnregisterAsync(userName);
@@ -367,7 +367,7 @@ public sealed class RegistratorTests
     public async Task GetUsersAsync_ShouldContainAllTheUsers()
     {
         //act
-        var users = await _userManager.Registrator.GetUsersAsync();
+        IEnumerable<User> users = await _userManager.Registrator.GetUsersAsync();
 
         //assert
         users
@@ -376,5 +376,4 @@ public sealed class RegistratorTests
             .Should()
             .Equal(["admin", "Carl101", "JohnDear56", "Pam51"]);
     }
-
 }

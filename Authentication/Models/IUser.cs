@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Authentication.Models
+﻿namespace Authentication.Models
 {
     /// <summary>
     /// User abstraction.
@@ -26,7 +20,6 @@ namespace Authentication.Models
         /// Used to guarantee different <see cref="HashedPassword"/> for every user.
         /// </remarks>
         string Salt { get; set; }
-    
-    }
 
+    }
 }

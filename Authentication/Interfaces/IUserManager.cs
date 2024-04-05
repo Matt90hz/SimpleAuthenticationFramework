@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Authentication.Models;
+﻿using Authentication.Models;
 
 namespace Authentication.Interfaces
 {
@@ -12,7 +7,7 @@ namespace Authentication.Interfaces
     /// </summary>
     /// <typeparam name="TUser"></typeparam>
     /// <typeparam name="TRole"></typeparam>
-    public interface IUserManager<TUser, TRole> 
+    public interface IUserManager<TUser, TRole>
         where TUser : IUser
         where TRole : IRole
     {
@@ -37,5 +32,4 @@ namespace Authentication.Interfaces
         /// </summary>
         IAuthorizer Authorizer { get; }
     }
-
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Authentication.Models
+﻿namespace Authentication.Models
 {
     /// <summary>
     /// Utility class used to easily manage many-to-many realation between <see cref="IUser"/> and <see cref="IRole"/> in Entity Framework.

@@ -1,10 +1,5 @@
-﻿using Authentication.Models;
-using Authentication.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Authentication.Interfaces;
+using Authentication.Models;
 
 namespace Authentication
 {
@@ -50,5 +45,4 @@ namespace Authentication
         /// <inheritdoc/>
         public virtual IAuthorizer Authorizer { get; }
     }
-
 }

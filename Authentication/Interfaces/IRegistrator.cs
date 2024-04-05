@@ -1,7 +1,6 @@
-﻿using Authentication.Models;
-using System;
+﻿using Authentication.Exceptions;
+using Authentication.Models;
 using System.Collections.Generic;
-using Authentication.Exceptions;
 using System.Threading.Tasks;
 
 namespace Authentication.Interfaces

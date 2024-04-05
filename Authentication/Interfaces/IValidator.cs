@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Authentication.Interfaces
+﻿namespace Authentication.Interfaces
 {
     /// <summary>
     /// Abstraction to validate key properties of <see cref="Models.IUser"/> and <see cref="Models.IRole"/>.

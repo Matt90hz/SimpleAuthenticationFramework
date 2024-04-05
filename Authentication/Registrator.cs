@@ -1,11 +1,8 @@
-﻿using Authentication.Models;
+﻿using Authentication.Exceptions;
 using Authentication.Interfaces;
-using System;
+using Authentication.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Authentication.Exceptions;
 
 namespace Authentication
 {
@@ -44,7 +41,7 @@ namespace Authentication
             if (_store.FindUser(userName) is not TUser user) throw new InvalidUserException($"Invalid user name: {userName}.");
 
             if (!_validator.IsValidPassword(newPassword)) throw new InvalidPasswordException("Invalid password!");
-            
+
             user.Salt = _hasher.GenerateSalt();
             user.HashedPassword = _hasher.Hash(newPassword, user.Salt);
             _store.Update(user);
@@ -56,7 +53,7 @@ namespace Authentication
         {
             if (!_validator.IsValidUserName(user.UserName)) throw new InvalidUserException($"Invalid user name: {user.UserName}.");
 
-            if (!_validator.IsValidPassword(password))throw new InvalidPasswordException("Invalid password!");
+            if (!_validator.IsValidPassword(password)) throw new InvalidPasswordException("Invalid password!");
 
             user.Salt = _hasher.GenerateSalt();
 

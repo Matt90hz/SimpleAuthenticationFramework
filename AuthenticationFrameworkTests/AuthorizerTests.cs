@@ -7,7 +7,7 @@ namespace AuthenticationFrameworkTests;
 
 public sealed class AuthorizerTests
 {
-    readonly IUserManager<User, Role> _userManager = new UserManagerBuilder<User, Role>()
+    private readonly IUserManager<User, Role> _userManager = new UserManagerBuilder<User, Role>()
         .UseDbContextStore(new TestingDbContextFactory())
         .CreateUserManager();
 
@@ -19,7 +19,7 @@ public sealed class AuthorizerTests
 
         //act
         bool isAuthorized = _userManager.Authorizer.IsCurrentUserInRole("ADMIN");
-        
+
         //assert
         isAuthorized.Should().BeTrue();
     }

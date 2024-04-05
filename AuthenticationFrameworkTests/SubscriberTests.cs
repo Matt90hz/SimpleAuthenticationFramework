@@ -9,8 +9,8 @@ namespace AuthenticationFrameworkTests;
 
 public sealed class SubscriberTests
 {
-    readonly TestingDbContextFactory _dbContextFactory;
-    readonly IUserManager<User, Role> _userManager;
+    private readonly TestingDbContextFactory _dbContextFactory;
+    private readonly IUserManager<User, Role> _userManager;
 
     public SubscriberTests()
     {
@@ -29,7 +29,7 @@ public sealed class SubscriberTests
     public void Roles_Returns_AllRoles()
     {
         //act
-        var roles = _userManager.Subscriber.Roles;
+        IEnumerable<Role> roles = _userManager.Subscriber.Roles;
 
         //assert
         roles
@@ -47,7 +47,7 @@ public sealed class SubscriberTests
         string[] expectedSubscriptions = ["GUEST", "USER"];
 
         //act
-        var subscriptions = _userManager.Subscriber.GetUserRoles(user);
+        IEnumerable<Role> subscriptions = _userManager.Subscriber.GetUserRoles(user);
 
         //assert
         subscriptions
@@ -188,7 +188,7 @@ public sealed class SubscriberTests
     public async Task GetRolesAsync_Returns_AllRoles()
     {
         //act
-        var roles = await _userManager.Subscriber.GetRolesAsync();
+        IEnumerable<Role> roles = await _userManager.Subscriber.GetRolesAsync();
 
         //assert
         roles
@@ -206,7 +206,7 @@ public sealed class SubscriberTests
         string[] expectedSubscriptions = ["GUEST", "USER"];
 
         //act
-        var subscriptions = await _userManager.Subscriber.GetUserRolesAsync(user);
+        IEnumerable<Role> subscriptions = await _userManager.Subscriber.GetUserRolesAsync(user);
 
         //assert
         subscriptions
@@ -274,7 +274,7 @@ public sealed class SubscriberTests
         string addedRole = "ADMIN";
 
         //act
-        var act = async () => await _userManager.Subscriber.SubscribeAsync(addedRole, user);
+        Func<Task> act = async () => await _userManager.Subscriber.SubscribeAsync(addedRole, user);
 
         //assert
         await act.Should().ThrowAsync<InvalidUserException>();
@@ -288,7 +288,7 @@ public sealed class SubscriberTests
         string addedRole = "wrong";
 
         //act
-        var act = async () => await _userManager.Subscriber.SubscribeAsync(addedRole, user);
+        Func<Task> act = async () => await _userManager.Subscriber.SubscribeAsync(addedRole, user);
 
         //assert
         await act.Should().ThrowAsync<InvalidRoleException>();
@@ -323,7 +323,7 @@ public sealed class SubscriberTests
         string addedRole = "ADMIN";
 
         //act
-        var act = async () => await _userManager.Subscriber.UnsubscribeAsync(addedRole, user);
+        Func<Task> act = async () => await _userManager.Subscriber.UnsubscribeAsync(addedRole, user);
 
         //assert
         await act.Should().ThrowAsync<InvalidUserException>();
@@ -337,7 +337,7 @@ public sealed class SubscriberTests
         string addedRole = "wrong";
 
         //act
-        var act = async () => await _userManager.Subscriber.UnsubscribeAsync(addedRole, user);
+        Func<Task> act = async () => await _userManager.Subscriber.UnsubscribeAsync(addedRole, user);
 
         //assert
         await act.Should().ThrowAsync<InvalidRoleException>();

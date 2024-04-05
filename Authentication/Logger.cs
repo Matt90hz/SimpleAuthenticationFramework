@@ -1,8 +1,5 @@
-﻿using Authentication.Models;
-using Authentication.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using Authentication.Interfaces;
+using Authentication.Models;
 using System.Threading.Tasks;
 
 namespace Authentication
@@ -39,8 +36,8 @@ namespace Authentication
         /// <inheritdoc/>
         public virtual bool Login(string userName, string password)
         {
-            if(!_authenticator.Authenticate(userName, password)) return false;
-                
+            if (!_authenticator.Authenticate(userName, password)) return false;
+
             CurrentUser = _store.FindUser(userName);
 
             return true;

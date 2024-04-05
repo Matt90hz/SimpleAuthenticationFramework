@@ -1,11 +1,8 @@
-﻿using Authentication.Models;
+﻿using Authentication.Exceptions;
 using Authentication.Interfaces;
-using System;
+using Authentication.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Authentication.Exceptions;
 
 namespace Authentication
 {
@@ -35,7 +32,7 @@ namespace Authentication
 
         /// <inheritdoc/>
         public virtual IEnumerable<TRole> Roles => _store.GetAllRoles();
-        
+
         /// <inheritdoc/>
         public Task<IEnumerable<TRole>> GetRolesAsync()
         {

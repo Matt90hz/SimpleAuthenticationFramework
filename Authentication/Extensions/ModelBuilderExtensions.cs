@@ -1,10 +1,5 @@
 ﻿using Authentication.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Authentication.Extensions
 {
@@ -27,8 +22,8 @@ namespace Authentication.Extensions
         /// <returns>
         /// The same <see cref="ModelBuilder"/> instance so that additional configuration calls can be chained.
         /// </returns>
-        public static ModelBuilder ApplyUserManagerModelConfiguration<TUser, TRole>(this ModelBuilder modelBuilder) 
-            where TUser : class, IUser 
+        public static ModelBuilder ApplyUserManagerModelConfiguration<TUser, TRole>(this ModelBuilder modelBuilder)
+            where TUser : class, IUser
             where TRole : class, IRole
         {
             modelBuilder.Entity<TRole>(entity =>

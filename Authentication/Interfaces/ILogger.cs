@@ -1,8 +1,4 @@
 ﻿using Authentication.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Authentication.Interfaces
@@ -34,7 +30,7 @@ namespace Authentication.Interfaces
     /// Login and logout abstraction.
     /// </summary>
     /// <typeparam name="TUser"></typeparam>
-    public interface ILogger<TUser> : ILogger 
+    public interface ILogger<TUser> : ILogger
         where TUser : IUser
     {
         /// <summary>

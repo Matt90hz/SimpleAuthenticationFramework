@@ -1,8 +1,8 @@
-﻿using Authentication.Models;
-using Authentication.Interfaces;
+﻿using Authentication.Interfaces;
+using Authentication.Models;
 using Authentication.Stores;
-using Microsoft.EntityFrameworkCore;
 using Authentication.Stores.DbContextStore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Authentication
 {
@@ -15,13 +15,37 @@ namespace Authentication
         where TUser : class, IUser
         where TRole : class, IRole
     {
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected IStore<TUser, TRole>? _store;
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected IHasher? _hasher;
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected IAuthenticator? _authenticator;
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected ILogger<TUser>? _logger;
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected IRegistrator<TUser>? _registrator;
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected ISubscriber<TRole>? _subscriber;
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected IValidator? _validator;
+        /// <summary>
+        /// Backing field
+        /// </summary>
         protected IAuthorizer? _authorizer;
 
         /// <summary>
@@ -29,7 +53,7 @@ namespace Authentication
         /// </summary>
         public UserManagerBuilder()
         {
-            
+
         }
 
         /// <summary>
@@ -42,29 +66,29 @@ namespace Authentication
         public UserManager<TUser, TRole> CreateUserManager()
         {
             _store ??= new InMemoryStore<TUser, TRole>();
-            
+
             _hasher ??= new Hasher();
-            
+
             _authenticator ??= new Authenticator<TUser, TRole>(_store, _hasher);
-            
+
             _logger ??= new Logger<TUser, TRole>(_store, _authenticator);
-            
+
             _validator ??= new Validator<TUser, TRole>(_store);
 
             _registrator ??= new Registrator<TUser, TRole>(_store, _hasher, _validator);
-            
-            _subscriber ??= new Subscriber<TUser, TRole>(_store);     
+
+            _subscriber ??= new Subscriber<TUser, TRole>(_store);
 
             _authorizer ??= new Authorizer<TUser, TRole>(_store, _logger);
-            
-            return new UserManager<TUser, TRole>(_authenticator, _logger, _registrator, _subscriber, _authorizer); 
+
+            return new UserManager<TUser, TRole>(_authenticator, _logger, _registrator, _subscriber, _authorizer);
         }
 
         /// <summary>
         /// Use this method to configure <see cref="UserManager{TUser, TRole}"/> to use <paramref name="logger"/> as implementation of <see cref="ILogger{TUser}"/>.
         /// </summary>
         /// <remarks>
-        /// By default is used <see cref="Logger{TUser}"/>.
+        /// By default is used <see cref="Logger{TUser, TRole}"/>.
         /// </remarks>
         /// <param name="logger"></param>
         /// <returns><see cref="UserManagerBuilder{TUser, TRole}"/> to chain the configuration.</returns>
@@ -166,7 +190,7 @@ namespace Authentication
         /// </remarks>
         /// <param name="contextStore"></param>
         /// <returns><see cref="UserManagerBuilder{TUser, TRole}"/> to chain the configuration.</returns>
-        public UserManagerBuilder<TUser, TRole> AddStore(IStore<TUser,TRole> contextStore)
+        public UserManagerBuilder<TUser, TRole> AddStore(IStore<TUser, TRole> contextStore)
         {
             _store = contextStore;
             return this;
@@ -199,5 +223,4 @@ namespace Authentication
             return this;
         }
     }
-
 }

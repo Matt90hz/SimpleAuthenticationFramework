@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Authentication.Interfaces
+﻿namespace Authentication.Interfaces
 {
     /// <summary>
     /// Password encription abstraction
@@ -34,6 +28,4 @@ namespace Authentication.Interfaces
         /// <returns>A <c>string</c> that rapresent the salt value.</returns>
         string GenerateSalt();
     }
-
-
 }

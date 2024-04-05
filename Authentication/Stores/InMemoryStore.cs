@@ -1,9 +1,7 @@
-﻿using Authentication.Models;
-using Authentication.Interfaces;
-using System;
+﻿using Authentication.Interfaces;
+using Authentication.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Authentication.Stores
@@ -31,11 +29,11 @@ namespace Authentication.Stores
         /// <inheritdoc/>
         public void DeleteRole(string roleKey)
         {
-            if(_roles.Find(r => r.RoleKey == roleKey) is not TRole role) return;
+            if (_roles.Find(r => r.RoleKey == roleKey) is not TRole role) return;
 
             _roles.Remove(role);
-            
-            foreach(var subscription in _subscriptions)
+
+            foreach (var subscription in _subscriptions)
             {
                 if (subscription.RoleKey == roleKey) _subscriptions.Remove(subscription);
             }
@@ -88,7 +86,7 @@ namespace Authentication.Stores
         }
 
         /// <inheritdoc/>
-        public bool IsSubscribed(string userName,params string[] roleKeys)
+        public bool IsSubscribed(string userName, params string[] roleKeys)
         {
             return _subscriptions.Where(s => s.UserName == userName).Select(s => s.RoleKey).Intersect(roleKeys).Any();
         }
@@ -104,7 +102,7 @@ namespace Authentication.Stores
         /// <inheritdoc/>
         public void Update(TUser user)
         {
-            if(FindUser(user.UserName) is TUser existingUser) _users.Remove(existingUser);
+            if (FindUser(user.UserName) is TUser existingUser) _users.Remove(existingUser);
 
             _users.Add(user);
 
@@ -149,7 +147,7 @@ namespace Authentication.Stores
 
             return Task.FromResult(users);
         }
-        
+
         /// <inheritdoc/>
         public Task UpdateAsync(TRole role)
         {
@@ -157,7 +155,7 @@ namespace Authentication.Stores
 
             return Task.CompletedTask;
         }
-        
+
         /// <inheritdoc/>
         public Task DeleteRoleAsync(string roleKey)
         {
@@ -165,7 +163,7 @@ namespace Authentication.Stores
 
             return Task.CompletedTask;
         }
-        
+
         /// <inheritdoc/>
         public Task<TRole?> FindRoleAsync(string roleKey)
         {
@@ -173,7 +171,7 @@ namespace Authentication.Stores
 
             return Task.FromResult(role);
         }
-        
+
         /// <inheritdoc/>
         public Task<IEnumerable<TRole>> GetRolesAsync()
         {
@@ -181,7 +179,7 @@ namespace Authentication.Stores
 
             return Task.FromResult(roles);
         }
-        
+
         /// <inheritdoc/>
         public Task JoinAsync(string userName, string roleKey)
         {
@@ -189,7 +187,7 @@ namespace Authentication.Stores
 
             return Task.CompletedTask;
         }
-        
+
         /// <inheritdoc/>
         public Task DetachAsync(string userName, string roleKey)
         {
@@ -197,7 +195,7 @@ namespace Authentication.Stores
 
             return Task.CompletedTask;
         }
-        
+
         /// <inheritdoc/>
         public Task<bool> IsSubscribedAsync(string userName, params string[] roleKeys)
         {

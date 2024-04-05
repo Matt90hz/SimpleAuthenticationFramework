@@ -1,10 +1,5 @@
-﻿using Authentication.Models;
-using Authentication.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using Authentication.Interfaces;
+using Authentication.Models;
 using System.Threading.Tasks;
 
 namespace Authentication
@@ -41,7 +36,7 @@ namespace Authentication
         /// <inheritdoc/>
         public async Task<bool> IsCurrentUserInRoleAsync(params string[] roleKeys)
         {
-            return _logger.CurrentUser is TUser user 
+            return _logger.CurrentUser is TUser user
                 && await _store.IsSubscribedAsync(user.UserName, roleKeys);
         }
     }

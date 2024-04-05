@@ -7,7 +7,7 @@ namespace AuthenticationFrameworkTests;
 
 public sealed class LoggerTests
 {
-    readonly IUserManager<User, Role> _userManager = new UserManagerBuilder<User, Role>()
+    private readonly IUserManager<User, Role> _userManager = new UserManagerBuilder<User, Role>()
        .UseDbContextStore(new TestingDbContextFactory())
        .CreateUserManager();
 
@@ -15,8 +15,8 @@ public sealed class LoggerTests
     public void Login_UsingValidCredential_CurrentUserIsSet()
     {
         //arrange
-        var userName = "admin";
-        var password = "admin!01";
+        string userName = "admin";
+        string password = "admin!01";
 
         //act
         bool isLogged = _userManager.Logger.Login(userName, password);
@@ -33,8 +33,8 @@ public sealed class LoggerTests
     public void Login_UsingInvalidUserName_CurrentUserStillNull()
     {
         //arrange
-        var userName = "wrong";
-        var password = "admin!01";
+        string userName = "wrong";
+        string password = "admin!01";
         _userManager.Logger.Logout();
 
         //act
@@ -50,8 +50,8 @@ public sealed class LoggerTests
     public void Login_UsingInvalidPassword_CurrentUserStillNull()
     {
         //arrange
-        var userName = "admin";
-        var password = "wrong";
+        string userName = "admin";
+        string password = "wrong";
         _userManager.Logger.Logout();
 
         //act
@@ -67,8 +67,8 @@ public sealed class LoggerTests
     public async Task LoginAsync_UsingValidCredential_CurrentUserIsSet()
     {
         //arrange
-        var userName = "admin";
-        var password = "admin!01";
+        string userName = "admin";
+        string password = "admin!01";
 
         //act
         bool isLogged = await _userManager.Logger.LoginAsync(userName, password);
@@ -85,8 +85,8 @@ public sealed class LoggerTests
     public async Task LoginAsync_UsingInvalidUserName_CurrentUserStillNull()
     {
         //arrange
-        var userName = "wrong";
-        var password = "admin!01";
+        string userName = "wrong";
+        string password = "admin!01";
         _userManager.Logger.Logout();
 
         //act
@@ -102,8 +102,8 @@ public sealed class LoggerTests
     public async Task LoginAsync_UsingInvalidPassword_CurrentUserStillNull()
     {
         //arrange
-        var userName = "admin";
-        var password = "wrong";
+        string userName = "admin";
+        string password = "wrong";
         _userManager.Logger.Logout();
 
         //act
@@ -114,7 +114,6 @@ public sealed class LoggerTests
         _userManager.Logger.CurrentUser
             .Should().BeNull();
     }
-
 
     [Fact]
     public void Logout_CurrentUser_ShouldBeNull()

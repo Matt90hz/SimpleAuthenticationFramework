@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Authentication.Models
+﻿namespace Authentication.Models
 {
     /// <summary>
     /// Role abstraction.
@@ -13,5 +10,4 @@ namespace Authentication.Models
         /// </summary>
         string RoleKey { get; set; }
     }
-
 }

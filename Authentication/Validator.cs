@@ -1,11 +1,8 @@
-﻿using Authentication.Models;
-using Authentication.Interfaces;
+﻿using Authentication.Interfaces;
+using Authentication.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Authentication
 {
@@ -49,21 +46,21 @@ namespace Authentication
             if (string.IsNullOrEmpty(password)) return false;
 
             if (password.Length < 6) return false;
-  
+
             return true;
-            
+
         }
 
         /// <inheritdoc/>
         public virtual bool IsValidRoleKey(string roleKey)
         {
             if (string.IsNullOrWhiteSpace(roleKey)) return false;
-            
+
             if (roleKey.Any(c => char.IsSymbol(c))) return false;
 
             if (_store.FindRole(roleKey) is not null) return false;
 
-            return true;          
+            return true;
         }
 
         /// <inheritdoc/>
@@ -72,11 +69,11 @@ namespace Authentication
             if (string.IsNullOrWhiteSpace(userName)) return false;
 
             if (userName.Any(c => char.IsSymbol(c))) return false;
-            
+
             if (_store.FindUser(userName) is not null) return false;
 
             return true;
-            
+
         }
     }
 }
