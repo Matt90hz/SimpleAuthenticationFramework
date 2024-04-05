@@ -73,14 +73,10 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            if (context.Users.AsNoTracking().Any(u => u.UserName == user.UserName))
-            {
-                context.Users.Update(user);
-            }
-            else
-            {
+            if (context.Users.AsNoTracking().Any(u => u.UserName == user.UserName))            
+                context.Users.Update(user);           
+            else        
                 context.Users.Add(user);
-            }
 
             context.SaveChanges();
 
@@ -122,15 +118,11 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            if (context.Roles.AsNoTracking().Any(r => r.RoleKey == role.RoleKey))
-            {
-                context.Roles.Update(role);
-            }
-            else
-            {
+            if (context.Roles.AsNoTracking().Any(r => r.RoleKey == role.RoleKey))           
+                context.Roles.Update(role);          
+            else            
                 context.Roles.Add(role);
-            }
-
+            
             context.SaveChanges();
         }
 
@@ -158,7 +150,10 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            context.Users.Update(user);
+            if (await context.Users.AsNoTracking().AnyAsync(x => x.UserName == user.UserName)) 
+                context.Update(user);
+            else 
+                context.Add(user);
 
             await context.SaveChangesAsync();
         }
