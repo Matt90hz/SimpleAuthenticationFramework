@@ -37,5 +37,12 @@ namespace Authentication
         {
             return _logger.CurrentUser is TUser user && _store.IsSubscribed(user.UserName, roleKeys);
         }
+
+        /// <inheritdoc/>
+        public async Task<bool> IsCurrentUserInRoleAsync(params string[] roleKeys)
+        {
+            return _logger.CurrentUser is TUser user 
+                && await _store.IsSubscribedAsync(user.UserName, roleKeys);
+        }
     }
 }

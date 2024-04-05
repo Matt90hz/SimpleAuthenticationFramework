@@ -20,5 +20,8 @@ namespace Authentication.Interfaces
         /// <c>True</c> if the user is subscribed to the role. <c>False</c> if not.
         /// </returns>
         bool IsCurrentUserInRole(params string[] roleKeys);
+
+        /// <inheritdoc cref="IsCurrentUserInRole(string[])"/>
+        Task<bool> IsCurrentUserInRoleAsync(params string[] roleKeys);
     }
 }
