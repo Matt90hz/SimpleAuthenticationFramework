@@ -57,7 +57,13 @@ namespace Authentication.Stores.DbContextStore
         public virtual TUser? FindUser(string userName)
         {
             using var context = _dbContextFactory.CreateDbContext();
-            return context.Users.AsNoTracking().FirstOrDefault(u => u.UserName == userName);
+
+            var user = context.Users
+                .AsNoTracking()
+                .OrderBy(x => x.UserName)
+                .FirstOrDefault(x => x.UserName == userName);
+
+            return user;
         }
 
         /// <inheritdoc/>
@@ -65,7 +71,12 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            return context.Roles.AsNoTracking().FirstOrDefault(r => r.RoleKey == roleKey);
+            var role = context.Roles
+                .AsNoTracking()
+                .OrderBy(x => x.RoleKey)
+                .FirstOrDefault(x => x.RoleKey == roleKey);
+
+            return role;
         }
 
         /// <inheritdoc/>
@@ -74,9 +85,13 @@ namespace Authentication.Stores.DbContextStore
             using var context = _dbContextFactory.CreateDbContext();
 
             if (context.Users.AsNoTracking().Any(u => u.UserName == user.UserName))
+            {
                 context.Users.Update(user);
+            }
             else
+            {
                 context.Users.Add(user);
+            }
 
             context.SaveChanges();
 
@@ -86,7 +101,7 @@ namespace Authentication.Stores.DbContextStore
         public virtual IEnumerable<TUser> GetAllUsers()
         {
             using var context = _dbContextFactory.CreateDbContext();
-            return context.Users.AsNoTracking().ToList();
+            return context.Users.AsNoTracking().ToArray();
         }
 
         /// <inheritdoc/>
@@ -94,9 +109,7 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            if (FindUser(userName) is null || FindRole(roleKey) is null) return;
-
-            if (context.Subscriptions.Any(s => s.UserName == userName && s.RoleKey == roleKey)) return;
+            if (context.Subscriptions.AsNoTracking().Any(s => s.UserName == userName && s.RoleKey == roleKey)) return;
 
             context.Subscriptions.Add(new(userName, roleKey));
             context.SaveChanges();
@@ -107,9 +120,13 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            if (context.Subscriptions.FirstOrDefault(s => s.UserName == userName && s.RoleKey == roleKey) is not Subscription subscription) return;
+            var subscription = context.Subscriptions
+                .OrderBy(x => x.UserName)
+                .FirstOrDefault(x => x.UserName == userName && x.RoleKey == roleKey);
 
-            context.Subscriptions.Remove(subscription);
+            if (subscription is null) return;
+
+            context.Remove(subscription);
             context.SaveChanges();
         }
 
@@ -119,9 +136,13 @@ namespace Authentication.Stores.DbContextStore
             using var context = _dbContextFactory.CreateDbContext();
 
             if (context.Roles.AsNoTracking().Any(r => r.RoleKey == role.RoleKey))
+            {
                 context.Roles.Update(role);
+            }
             else
+            {
                 context.Roles.Add(role);
+            }
 
             context.SaveChanges();
         }
@@ -130,7 +151,7 @@ namespace Authentication.Stores.DbContextStore
         public IEnumerable<TRole> GetAllRoles()
         {
             using var context = _dbContextFactory.CreateDbContext();
-            return context.Roles.AsNoTracking().ToList();
+            return context.Roles.AsNoTracking().ToArray();
         }
 
         /// <inheritdoc/>
@@ -138,11 +159,11 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            return context.Subscriptions
+            bool isSubscribed = context.Subscriptions
                 .AsNoTracking()
-                .Where(s => s.UserName == userName)
-                .ToArray()
-                .Any(subscription => roleKeys.Contains(subscription.RoleKey));
+                .Any(subscription => subscription.UserName == userName && roleKeys.Contains(subscription.RoleKey));
+
+            return isSubscribed;
         }
 
         /// <inheritdoc/>
@@ -151,9 +172,13 @@ namespace Authentication.Stores.DbContextStore
             using var context = _dbContextFactory.CreateDbContext();
 
             if (await context.Users.AsNoTracking().AnyAsync(x => x.UserName == user.UserName))
+            {
                 context.Update(user);
+            }
             else
+            {
                 context.Add(user);
+            }
 
             await context.SaveChangesAsync();
         }
@@ -163,7 +188,9 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            var user = await context.FindAsync<TUser>(userName) ?? throw new InvalidUserException($"User {userName} not found!");
+            var user = await context.FindAsync<TUser>(userName);
+
+            if (user is null) return;
 
             context.Remove(user);
 
@@ -175,7 +202,12 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            return await context.FindAsync<TUser>(userName);
+            var user = await context.Users
+                .AsNoTracking()
+                .OrderBy(x => x.UserName)
+                .FirstOrDefaultAsync(x => x.UserName == userName);
+
+            return user;
         }
 
         /// <inheritdoc/>
@@ -183,7 +215,9 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            return await context.Users.AsNoTracking().ToArrayAsync();
+            var users = await context.Users.AsNoTracking().ToArrayAsync();
+
+            return users;
         }
 
         /// <inheritdoc/>
@@ -191,7 +225,14 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            context.Update(role);
+            if(await context.Roles.AsNoTracking().AnyAsync(x => x.RoleKey == role.RoleKey))
+            {
+                context.Update(role);
+            }
+            else
+            {
+                context.Add(role);
+            }
 
             await context.SaveChangesAsync();
         }
@@ -201,7 +242,13 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            var role = await context.FindAsync<TRole>(roleKey) ?? throw new InvalidRoleException($"Role {roleKey} not found!");
+            var role = await context.FindAsync<TRole>(roleKey);
+
+            if (role is null) return;
+
+            context.Remove(role);
+
+            await context.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
@@ -209,7 +256,12 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            return await context.FindAsync<TRole>(roleKey);
+            var role = await context.Roles
+                .AsNoTracking()
+                .OrderBy(x => x.RoleKey)
+                .FirstOrDefaultAsync(x => x.RoleKey == roleKey);
+
+            return role;
         }
 
         /// <inheritdoc/>
@@ -217,7 +269,9 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            return await context.Roles.AsNoTracking().ToArrayAsync();
+            var roles = await context.Roles.AsNoTracking().ToArrayAsync();
+
+            return roles;
         }
 
         /// <inheritdoc/>
@@ -225,12 +279,9 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            var user = await context.FindAsync<TUser>(userName) ?? throw new InvalidUserException($"User {userName} not found!");
-            var role = await context.FindAsync<TRole>(roleKey) ?? throw new InvalidRoleException($"Role {roleKey} not found!");
+            if (await context.Subscriptions.AsNoTracking().AnyAsync(s => s.UserName == userName && s.RoleKey == roleKey)) return;
 
-            if (context.Subscriptions.Any(s => s.UserName == userName && s.RoleKey == roleKey)) return;
-
-            context.Subscriptions.Add(new(userName, roleKey));
+            context.Add(new Subscription(userName, roleKey));
 
             await context.SaveChangesAsync();
         }
@@ -240,7 +291,12 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            if (context.Subscriptions.FirstOrDefault(s => s.UserName == userName && s.RoleKey == roleKey) is not Subscription subscription) return;
+            var subscription = context.Subscriptions
+                .AsNoTracking()
+                .OrderBy(x => x.UserName)
+                .FirstOrDefault(s => s.UserName == userName && s.RoleKey == roleKey);
+
+            if (subscription is null) return;
 
             context.Remove(subscription);
 
@@ -252,10 +308,11 @@ namespace Authentication.Stores.DbContextStore
         {
             using var context = _dbContextFactory.CreateDbContext();
 
-            var subscriptions = await context.Subscriptions.AsNoTracking().Where(s => s.UserName == userName).ToArrayAsync();
+            bool isSubscribed = await context.Subscriptions
+                .AsNoTracking()
+                .AnyAsync(subscription => subscription.UserName == userName && roleKeys.Contains(subscription.RoleKey));
 
-            return subscriptions.Any(subscription => roleKeys.Contains(subscription.RoleKey));
-
+            return isSubscribed;
         }
     }
 }

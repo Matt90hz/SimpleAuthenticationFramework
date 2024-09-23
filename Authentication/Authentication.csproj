@@ -6,7 +6,7 @@
 	<PackageId>IncaTechnologies.SimpleAuthentication</PackageId>
 	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	<Title>Simple Authentication Framework</Title>
-	<Version>1.1.0</Version>
+	<Version>1.1.1</Version>
 	<Authors>IncaTechnologies</Authors>
 	<Product>Simple Authentication Framework</Product>
 	<Description>Simple role based authentication framework.</Description>
@@ -14,7 +14,8 @@
 	<PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
 	<PackageReleaseNotes>1.0.0 - First release
 1.0.1 - Included documentation
-1.1.0 - Supported asyncronous operations</PackageReleaseNotes>
+1.1.0 - Supported asyncronous operations
+1.1.1 - Solved EF warnings</PackageReleaseNotes>
 	<NeutralLanguage>en</NeutralLanguage>
 	<PackageTags>user management, authentication, authorization, role, roles, users, users, login, auth</PackageTags>
 	<PackageProjectUrl>https://github.com/Matt90hz/SimpleAuthenticationFramework</PackageProjectUrl>
